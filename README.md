@@ -28,3 +28,5 @@ Target class to be modified, must be present in configuration file : TransformDe
 
 Exported Jar file : class-agent.jar must be indicated in JVM argument like this :
 -javaagent:class-agent.jar
+So : before runtime, Center is intrumented with a default no arg constructor and then when jackson is reading the json file, there's no mapping error anymore.
+ 
