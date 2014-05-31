@@ -1,0 +1,16 @@
+{
+  "classDef" : [ {
+    "classForName" : "test.mock.Center",
+    "defaultConstructor" : true,
+    "methodDefs" : [ ],
+    "fieldDefs" : [ {
+      "name" : "name",
+      "type" : "java.lang.String",
+      "modifier" : 2
+    }, {
+      "name" : "adress",
+      "type" : "java.lang.String",
+      "modifier" : 2
+    } ]
+  } ]
+}
