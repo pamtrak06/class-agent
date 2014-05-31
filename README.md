@@ -22,6 +22,6 @@ Target class to be modified, must be present in configuration file : TransformDe
         "fieldDefs" : [ ]
       } ]
     }
-'''
+
 Exported Jar file : class-agent.jar must be indicated in JVM argument like this :
 -javaagent:class-agent.jar
