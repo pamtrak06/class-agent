@@ -13,6 +13,7 @@ Useful by example with context where jackson is reading a json structure from th
     can not instantiate from JSON object (need to add/enable type information?)"
 
 ### Configuration ###
+By exemple, we want to add a default no arg constructor in class "test.mock.Center" which is accessible in a third party library (no jackson annotation possible).
 Target class to be modified, must be present in configuration file : TransformDef.json, like this.
 '''
 
