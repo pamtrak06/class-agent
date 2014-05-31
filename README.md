@@ -14,21 +14,21 @@ Useful by example with context where jackson is reading a json structure from th
 Target class to be modified, must be present in configuration file : TransformDef.json, like this.
 '''
 
-{
+  {
 
-  "classDef" : [ {
+    "classDef" : [ {
   
-    "classForName" : "test.mock.Center",
+      "classForName" : "test.mock.Center",
     
-    "defaultConstructor" : true,
+      "defaultConstructor" : true,
     
-    "methodDefs" : [ ],
+      "methodDefs" : [ ],
     
-    "fieldDefs" : [ ]
+      "fieldDefs" : [ ]
     
-  } ]
+    } ]
   
-}
+  }
 
 
 '''
