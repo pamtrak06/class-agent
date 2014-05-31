@@ -13,6 +13,7 @@ Useful by example with context where jackson is reading a json structure from th
 ### Configuration ###
 Target class to be modified, must be present in configuration file : TransformDef.json, like this.
 '''
+
 {
 
   "classDef" : [ {
@@ -28,6 +29,7 @@ Target class to be modified, must be present in configuration file : TransformDe
   } ]
   
 }
+
 
 '''
 Exported Jar file : class-agent.jar must be indicated in JVM argument like this :
