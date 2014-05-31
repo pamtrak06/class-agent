@@ -11,7 +11,7 @@ Useful by example with context where jackson is reading a json structure from th
 "org.codehaus.jackson.map.JsonMappingException: No suitable constructor found for type [simple type, class ...]: can not instantiate from JSON object (need to add/enable type information?)"
 
 ### Configuration ###
-Target class to be modified, must be present in configuration file : TransformDef.json, like this.
+* Target class to be modified, must be present in configuration file : TransformDef.json, like this.
     '''
 
     {
@@ -21,7 +21,7 @@ Target class to be modified, must be present in configuration file : TransformDe
         "methodDefs" : [ ],
         "fieldDefs" : [ ]
       } ]
-    }'''
+    }
 
-Exported Jar file : class-agent.jar must be indicated in JVM argument like this :
+* Exported Jar file : class-agent.jar must be indicated in JVM argument like this :
 -javaagent:class-agent.jar
