@@ -17,27 +17,29 @@ import com.google.common.io.Resources;
 import com.google.gson.Gson;
 
 public class TransformDef {
-	private static final String	      EXT_JSON	= ".json";
+	private static final String EXT_JSON = ".json";
 
-	private final static ObjectMapper	MAPPER	= new ObjectMapper();
+	private final static ObjectMapper MAPPER = new ObjectMapper();
 
-	private final static Gson	      GSON	   = new Gson();
+	private final static Gson GSON = new Gson();
 
 	static {
 		// take account only public fields
-		MAPPER.setVisibilityChecker(MAPPER.getSerializationConfig().getDefaultVisibilityChecker()
-		        .withFieldVisibility(JsonAutoDetect.Visibility.ANY).withGetterVisibility(JsonAutoDetect.Visibility.ANY)
-		        .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
-		        .withCreatorVisibility(JsonAutoDetect.Visibility.ANY));
+		MAPPER.setVisibilityChecker(MAPPER.getSerializationConfig()
+				.getDefaultVisibilityChecker()
+				.withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+				.withGetterVisibility(JsonAutoDetect.Visibility.ANY)
+				.withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+				.withCreatorVisibility(JsonAutoDetect.Visibility.ANY));
 		MAPPER.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 		MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
 		MAPPER.enable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
 		MAPPER.enable(MapperFeature.AUTO_DETECT_CREATORS);
 	}
 
-	private List<ClassDef>	          classDef	= new ArrayList<ClassDef>();
+	private List<ClassDef> classDef = new ArrayList<ClassDef>();
 
-	private static TransformDef	      instance	= new TransformDef();
+	private static TransformDef instance = new TransformDef();
 
 	private TransformDef() {
 		super();
@@ -61,13 +63,16 @@ public class TransformDef {
 		return gson.toJson(this);
 	}
 
-	public void writeConfig(TransformDef transformDef) throws JsonGenerationException, JsonMappingException,
-	        IOException {
-		MAPPER.writeValue(new File(TransformDef.class.getSimpleName() + EXT_JSON), TransformDef.getInstance());
+	public void writeConfig(TransformDef transformDef)
+			throws JsonGenerationException, JsonMappingException, IOException {
+		MAPPER.writeValue(new File(TransformDef.class.getSimpleName()
+				+ EXT_JSON), TransformDef.getInstance());
 	}
 
-	public TransformDef readConfig() throws JsonParseException, JsonMappingException, IOException {
-		URL resource = Resources.getResource(TransformDef.class.getSimpleName() + EXT_JSON);
+	public TransformDef readConfig() throws JsonParseException,
+			JsonMappingException, IOException {
+		URL resource = Resources.getResource(TransformDef.class.getSimpleName()
+				+ EXT_JSON);
 		return MAPPER.readValue(resource, TransformDef.class);
 	}
 }
