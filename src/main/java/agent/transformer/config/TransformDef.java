@@ -16,12 +16,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
 
-public class TransformDef {
+public final class TransformDef {
 	private static final String EXT_JSON = ".json";
 
 	private final static ObjectMapper MAPPER = new ObjectMapper();
-
-	private final static Gson GSON = new Gson();
 
 	static {
 		// take account only public fields
