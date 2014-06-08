@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class ClassTransformer implements ClassFileTransformer {
 
-	private static Logger	    LOGGER	= Logger.getLogger(ClassTransformer.class.getName());
+	private static final Logger	    LOGGER	= Logger.getLogger(ClassTransformer.class.getName());
 
 	private static TransformDef	config	= null;
 
