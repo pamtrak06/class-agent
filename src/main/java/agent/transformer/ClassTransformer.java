@@ -20,67 +20,65 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class ClassTransformer implements ClassFileTransformer {
 
-	private static final Logger	    LOGGER	= Logger.getLogger(ClassTransformer.class.getName());
+    private static final Logger    LOGGER    = Logger.getLogger(ClassTransformer.class.getName());
 
-	private static TransformDef	config	= null;
+    private static TransformDef    config    = null;
 
-	static {
-		try {
-			config = TransformDef.getInstance().readConfig();
-		} catch (JsonParseException e) {
-			LOGGER.severe("Loading config file for transformer agent, cause: " + e.getMessage());
-		} catch (JsonMappingException e) {
-			LOGGER.severe("Loading config file for transformer agent, cause: " + e.getMessage());
-		} catch (IOException e) {
-			LOGGER.severe("Loading config file for transformer agent, cause: " + e.getMessage());
-		}
-	}
+    static {
+        try {
+            config = TransformDef.getInstance().readConfig();
+        } catch (JsonParseException e) {
+            LOGGER.severe("Loading config file for transformer agent, cause: " + e.getMessage());
+        } catch (JsonMappingException e) {
+            LOGGER.severe("Loading config file for transformer agent, cause: " + e.getMessage());
+        } catch (IOException e) {
+            LOGGER.severe("Loading config file for transformer agent, cause: " + e.getMessage());
+        }
+    }
 
-	@Override
-	public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
-	        ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-		byte[] byteCode = classfileBuffer;
+    @Override
+    public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
+            ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
+        byte[] byteCode = classfileBuffer;
 
-		List<ClassDef> classDefs = config.getClassDef();
+        List<ClassDef> classDefs = config.getClassDef();
 
-		for (ClassDef classDef : classDefs) {
+        for (ClassDef classDef : classDefs) {
 
-			String classNamePath = classDef.getClassForName().replace('.', '/');
-			if (className.equals(classNamePath)) {
+            String classNamePath = classDef.getClassForName().replace('.', '/');
+            if (className.equals(classNamePath)) {
 
-				try {
-					ClassPool cp = ClassPool.getDefault();
-					CtClass cc = cp.get(classDef.getClassForName());
+                try {
+                    ClassPool cp = ClassPool.getDefault();
+                    CtClass cc = cp.get(classDef.getClassForName());
 
-					// inject default no arg constructor if not present
-					if (classDef.isDefaultConstructor()) {
-						if (!isDefaultConstructorPresent(cc)) {
-							CtConstructor defaultConstructor = CtNewConstructor.defaultConstructor(cc);
-							cc.addConstructor(defaultConstructor);
-						}
-					}
+                    // inject default no arg constructor if not present
+                    if (classDef.isDefaultConstructor() && !isDefaultConstructorPresent(cc)) {
+                        CtConstructor defaultConstructor = CtNewConstructor.defaultConstructor(cc);
+                        cc.addConstructor(defaultConstructor);
+                    }
 
-					byteCode = cc.toBytecode();
-					cc.detach();
-				} catch (Exception ex) {
-					LOGGER.severe("Instrument classes from config file for transformer agent, cause: "
-					        + ex.getMessage());
-				}
-			}
-		}
+                    byteCode = cc.toBytecode();
+                    cc.detach();
+                } catch (Exception ex) {
+                    LOGGER.severe("Instrument classes from config file for transformer agent, cause: "
+                            + ex.getMessage());
+                }
+            }
+        }
 
-		return byteCode;
-	}
+        return byteCode;
+    }
 
-	private boolean isDefaultConstructorPresent(CtClass cc) throws NotFoundException {
-		boolean defaultConstructorPresent = false;
-		CtConstructor[] constructors = cc.getConstructors();
-		for (CtConstructor ctConstructor : constructors) {
-			if (ctConstructor.getParameterTypes().length == 0) {
-				defaultConstructorPresent = true;
-			}
-		}
-		return defaultConstructorPresent;
-	}
+    private boolean isDefaultConstructorPresent(CtClass cc) throws NotFoundException {
+        boolean defaultConstructorPresent = false;
+        CtConstructor[] constructors = cc.getConstructors();
+        for (CtConstructor ctConstructor : constructors) {
+            if (ctConstructor.getParameterTypes().length == 0) {
+                defaultConstructorPresent = true;
+            }
+        }
+        return defaultConstructorPresent;
+    }
 
 }
