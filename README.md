@@ -1,7 +1,7 @@
 class-agent
 ===========
 
-### objective ###
+### Objective ###
 Java agent allow to instrument a Java class from a json configuration file.
 Actually you give full class name (package + class Name) + set defaultConstructor to "true" and targeted classes will be modified by adding a default no-arg Constructor.
 
